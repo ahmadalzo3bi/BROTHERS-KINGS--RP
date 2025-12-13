@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BROTHERS KINGS RP - قوانين السيرفر</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #4a0e0e 50%, #000000 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 3px solid #dc2626;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(220, 38, 38, 0.3);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .header-text h1 {
+            font-size: 28px;
+            color: #dc2626;
+            margin-bottom: 5px;
+        }
+
+        .header-text p {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(220, 38, 38, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar h2 {
+            color: #dc2626;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .category-btn {
+            background: rgba(50, 50, 50, 0.8);
+            border: 2px solid rgba(100, 100, 100, 0.5);
+            color: #ccc;
+            padding: 12px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: right;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .category-btn:hover {
+            background: rgba(100, 100, 100, 0.8);
+            border-color: rgba(220, 38, 38, 0.6);
+            color: #fff;
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-color: #dc2626;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #dc2626, #991b1b);
+            border-radius: 12px;
+            padding: 30px;
+            border: 2px solid rgba(220, 38, 38, 0.5);
+        }
+
+        .category-header h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .category-header p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Laws Grid */
+        .laws-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .law-card {
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(220, 38, 38, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .law-card:hover {
+            border-color: #dc2626;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .law-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            justify-content: flex-end;
+        }
+
+        .law-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #dc2626;
+        }
+
+        .severity-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .severity-low {
+            background: rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+        }
+
+        .severity-medium {
+            background: rgba(234, 179, 8, 0.3);
+            color: #facc15;
+        }
+
+        .severity-high {
+            background: rgba(249, 115, 22, 0.3);
+            color: #fb923c;
+        }
+
+        .severity-critical {
+            background: rgba(239, 68, 68, 0.3);
+            color: #f87171;
+        }
+
+        .law-description {
+            color: #ddd;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            text-align: right;
+        }
+
+        .law-penalty {
+            background: rgba(220, 38, 38, 0.15);
+            border-right: 3px solid #dc2626;
+            padding: 12px 15px;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #fca5a5;
+        }
+
+        .penalty-label {
+            font-weight: bold;
+            color: #dc2626;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            border-top: 2px solid rgba(220, 38, 38, 0.3);
+            padding: 30px 20px;
+            text-align: center;
+            color: #999;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+
+            .header-text h1 {
+                font-size: 20px;
+            }
+
+            .category-header {
+                padding: 20px;
+            }
+
+            .category-header h2 {
+                font-size: 24px;
+            }
+
+            .law-header {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .empty-state p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">BK</div>
+            <div class="header-text">
+                <h1>BROTHERS KINGS RP</h1>
+                <p>Server Rules & Laws</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="content-wrapper">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h2>الفئات</h2>
+                <div class="category-list" id="categoryList"></div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <div class="category-header" id="categoryHeader" style="display: none;">
+                    <h2 id="categoryTitle"></h2>
+                    <p id="categoryDesc"></p>
+                </div>
+                <div class="laws-container" id="lawsContainer"></div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 BROTHERS KINGS RP - جميع الحقوق محفوظة</p>
+        <p>خادم FiveM RP متطور</p>
+    </footer>
+
+    <script>
+        // البيانات الكاملة
+        const categories = [
+            {
+                id: 1,
+                name: "قوانين المدينة",
+                description: "القوانين العامة للمدينة والقواعد الأساسية",
+                icon: "🏛️"
+            },
+            {
+                id: 2,
+                name: "قوانين السرقات",
+                description: "القوانين المتعلقة بالسرقة والنهب",
+                icon: "🚨"
+            },
+            {
+                id: 3,
+                name: "قوانين الصحة",
+                description: "قوانين الصحة والسلامة العامة",
+                icon: "⚕️"
+            },
+            {
+                id: 4,
+                name: "قوانين الشرطة",
+                description: "قوانين وتنظيمات قسم الشرطة",
+                icon: "👮"
+            },
+            {
+                id: 5,
+                name: "قوانين الإجرام",
+                description: "قوانين الجرائم والمخالفات الجنائية",
+                icon: "⚖️"
+            },
+            {
+                id: 6,
+                name: "قوانين المتجر",
+                description: "قوانين المتاجر والأعمال التجارية",
+                icon: "🏪"
+            },
+            {
+                id: 7,
+                name: "قوانين التكت",
+                description: "قوانين المخالفات والتذاكر المرورية",
+                icon: "🎫"
+            },
+            {
+                id: 8,
+                name: "قوانين الإدارة",
+                description: "قوانين وإجراءات الإدارة",
+                icon: "⚙️"
+            }
+        ];
+
+        const laws = [
+            // قوانين المدينة
+            {
+                categoryId: 1,
+                title: "حد السرعة",
+                description: "عدم تجاوز حدود السرعة في مناطق المدينة",
+                penalty: "غرامة 500 دولار أو السجن",
+                severity: "medium"
+            },
+            {
+                categoryId: 1,
+                title: "عدم الوقوف",
+                description: "عدم الوقوف في المناطق المحظورة",
+                penalty: "غرامة 250 دولار",
+                severity: "low"
+            },
+            // قوانين السرقات
+            {
+                categoryId: 2,
+                title: "سرقة المركبات",
+                description: "سرقة المركبات جريمة خطيرة جداً",
+                penalty: "السجن 30 دقيقة أو غرامة 2000 دولار",
+                severity: "high"
+            },
+            {
+                categoryId: 2,
+                title: "سرقة المتجر",
+                description: "سرقة المتاجر محظورة تماماً",
+                penalty: "السجن 45 دقيقة أو غرامة 3000 دولار",
+                severity: "critical"
+            },
+            // قوانين الصحة
+            {
+                categoryId: 3,
+                title: "عدم حمل الأسلحة في المستشفى",
+                description: "الأسلحة غير مسموحة في مناطق المستشفى",
+                penalty: "غرامة 1000 دولار ومصادرة السلاح",
+                severity: "high"
+            },
+            // قوانين الشرطة
+            {
+                categoryId: 4,
+                title: "الامتثال لأوامر الشرطة",
+                description: "يجب الامتثال دائماً لأوامر ضابط الشرطة",
+                penalty: "السجن 15 دقيقة",
+                severity: "medium"
+            },
+            // قوانين الإجرام
+            {
+                categoryId: 5,
+                title: "القتل",
+                description: "القتل هو أخطر جريمة",
+                penalty: "السجن 60 دقيقة",
+                severity: "critical"
+            },
+            // قوانين المتجر
+            {
+                categoryId: 6,
+                title: "ساعات العمل",
+                description: "يجب إغلاق المتاجر في الأوقات المحددة",
+                penalty: "غرامة 500 دولار",
+                severity: "low"
+            },
+            // قوانين التكت
+            {
+                categoryId: 7,
+                title: "مخالفة مرورية",
+                description: "المخالفات المرورية تؤدي إلى تذاكر",
+                penalty: "غرامة 300 دولار",
+                severity: "low"
+            },
+            // قوانين الإدارة
+            {
+                categoryId: 8,
+                title: "أوامر الإدارة",
+                description: "أوامر الإدارة للموظفين المصرح لهم فقط",
+                penalty: "حظر من السيرفر",
+                severity: "critical"
+            }
+        ];
+
+        let currentCategory = null;
+
+        // تحميل الفئات
+        function loadCategories() {
+            const categoryList = document.getElementById('categoryList');
+            categoryList.innerHTML = '';
+            
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn';
+                btn.innerHTML = `${cat.icon} ${cat.name}`;
+                btn.onclick = () => selectCategory(cat.id);
+                categoryList.appendChild(btn);
+            });
+
+            // اختيار الفئة الأولى افتراضياً
+            selectCategory(1);
+        }
+
+        // اختيار فئة
+        function selectCategory(categoryId) {
+            currentCategory = categoryId;
+            
+            // تحديث الأزرار
+            document.querySelectorAll('.category-btn').forEach((btn, index) => {
+                if (categories[index].id === categoryId) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            // عرض الفئة والقوانين
+            displayCategory(categoryId);
+        }
+
+        // عرض الفئة والقوانين
+        function displayCategory(categoryId) {
+            const category = categories.find(c => c.id === categoryId);
+            const categoryLaws = laws.filter(l => l.categoryId === categoryId);
+
+            // عرض رأس الفئة
+            document.getElementById('categoryTitle').textContent = category.name;
+            document.getElementById('categoryDesc').textContent = category.description;
+            document.getElementById('categoryHeader').style.display = 'block';
+
+            // عرض القوانين
+            const lawsContainer = document.getElementById('lawsContainer');
+            lawsContainer.innerHTML = '';
+
+            if (categoryLaws.length === 0) {
+                lawsContainer.innerHTML = '<div class="empty-state"><p>لا توجد قوانين في هذه الفئة</p></div>';
+                return;
+            }
+
+            categoryLaws.forEach(law => {
+                const card = document.createElement('div');
+                card.className = 'law-card';
+                
+                const severityClass = `severity-${law.severity}`;
+                const severityText = {
+                    low: 'منخفضة',
+                    medium: 'متوسطة',
+                    high: 'عالية',
+                    critical: 'حرجة'
+                }[law.severity];
+
+                card.innerHTML = `
+                    <div class="law-header">
+                        <span class="severity-badge ${severityClass}">${severityText}</span>
+                        <div class="law-title">${law.title}</div>
+                    </div>
+                    <div class="law-description">${law.description}</div>
+                    <div class="law-penalty">
+                        <span class="penalty-label">العقوبة:</span> ${law.penalty}
+                    </div>
+                `;
+                
+                lawsContainer.appendChild(card);
+            });
+        }
+
+        // تحميل الموقع
+        window.addEventListener('DOMContentLoaded', loadCategories);
+    </script>
+</body>
+</html>
